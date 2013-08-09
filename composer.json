@@ -1,5 +1,5 @@
 {
-  "name": "kohkimakimoto/backend-process",
+  "name": "kohkimakimoto/background-process",
   "description": "Minimum library to run processes asynchronously.",
   "keywords": ["process", "background"],
   "homepage": "https://github.com/kohkimakimoto/BackgroundProcess",
@@ -18,7 +18,7 @@
     "phpunit/phpunit": "3.*"
   },
   "autoload": {
-    "psr-0": { "Kohkimakimoto\\BackendProcess": "src/"}
+    "psr-0": { "Kohkimakimoto\\BackgroundProcess": "src/"}
   },
   "bin": ["bin/phpbgprocess"]
 }

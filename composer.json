@@ -1,0 +1,24 @@
+{
+  "name": "kohkimakimoto/backend-process",
+  "description": "Minimum library to run processes asynchronously.",
+  "keywords": ["process", "background"],
+  "homepage": "https://github.com/kohkimakimoto/BackgroundProcess",
+  "license": "Apache License 2.0",
+  "authors": [
+    {
+      "name": "Kohki Makimoto",
+      "email": "kohki.makimoto@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.3.0",
+    "symfony/process": "2.3.*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "3.*"
+  },
+  "autoload": {
+    "psr-0": { "Kohkimakimoto\\BackendProcess": "src/"}
+  },
+  "bin": ["bin/phpbgprocess"]
+}

@@ -1,6 +1,6 @@
 {
   "name": "kohkimakimoto/background-process",
-  "description": "Minimum library to run background processes asynchronously.",
+  "description": "A minimum library to run background processes asynchronously.",
   "keywords": ["process", "background"],
   "homepage": "https://github.com/kohkimakimoto/BackgroundProcess",
   "license": "Apache License 2.0",

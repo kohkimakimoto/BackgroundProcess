@@ -70,7 +70,7 @@ class BackgroundProcess
       umask(0000);
 
       if (!$fp = @fopen($path, 'wb')) {
-        throw new sfCacheException(sprintf('Unable to write cache file "%s".', $tmpFile));
+        throw new Exception("Unable to write to $path.");
       }
 
       $commandline = $this->commandline;
@@ -106,64 +106,6 @@ EOF;
       $this->processPHPPath = $path;
       return $this->processPHPPath;
     }
-
-    public function writeMetaJsonFile()
-    {
-      $fs = new Filesystem();
-      $dir = rtrim($this->getWorkingDirectory(), "/");
-      $key = $this->getBackgroundProcessKey();
-
-      if (!$fs->exists($dir)) {
-        // create directory.
-        $fs->mkdir($dir, 0777);
-      }
-
-      $path = $dir."/process.".$key.".json";
-      if ($fs->exists($path)) {
-        throw new Exception("$path is already exists.");
-      }
-
-      $currentUmask = umask();
-      umask(0000);
-
-      if (!$fp = @fopen($path, 'wb')) {
-        throw new sfCacheException(sprintf('Unable to write cache file "%s".', $tmpFile));
-      }
-
-      $contents =json_encode(array(
-          "key" => "$key",
-          "commandline" => $this->commandline,
-          "pid" => null,
-      ));
-
-      @fwrite($fp, $contents);
-      @fclose($fp);
-
-      umask($currentUmask);
-
-      $this->jsonPath = $path;
-      return $this->jsonPath;
-    }
-
-    public function appendPidToMetaJsonFile($pid)
-    {
-      $path = $this->jsonPath;
-      if (!$fp = @fopen($path, 'wb')) {
-        throw new sfCacheException(sprintf('Unable to write cache file "%s".', $tmpFile));
-      }
-
-      $key = $this->getBackgroundProcessKey();
-
-      $contents =json_encode(array(
-          "key" => "$key",
-          "commandline" => $this->commandline,
-          "pid" => $pid,
-      ));
-
-      @fwrite($fp, $contents);
-      @fclose($fp);
-    }
-
 
     /**
      * Generate unique key for indentifing background process.

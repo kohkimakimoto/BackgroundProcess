@@ -57,7 +57,7 @@ class BackgroundProcess
 
       if (!$fs->exists($dir)) {
         // create directory.
-        $fs->mkdir($path, 0777);
+        $fs->mkdir($dir, 0777);
       }
 
       $path = $dir."/process.".$key.".json";

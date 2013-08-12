@@ -11,12 +11,4 @@ class BackgroundProcessTest extends \PHPUnit_Framework_TestCase
         $process->run();
     }
 
-    /*
-    public function testwriteProcessJsonFile()
-    {
-      $process = new BackgroundProcess("ls -la");
-      $process->writeProcessJsonFile();
-    }
-    */
-
 }

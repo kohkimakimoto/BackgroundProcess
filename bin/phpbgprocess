@@ -1,4 +1,4 @@
 #!/usr/bin/env php
 <?php
-require_once __DIR__.'/../src/Kohkimakimoto/BackgroundProcess.php';
+require_once __DIR__.'/../src/Kohkimakimoto/BackgroundProcess/Cli.php';
 

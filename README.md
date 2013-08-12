@@ -7,7 +7,7 @@ BackgroundProcess is a PHP Library to run background processes asynchronously on
 
 ## How it works
 
-<a href="http://f.hatena.ne.jp/kohkimakimoto/20130812192250"><img src="http://img.f.hatena.ne.jp/images/fotolife/k/kohkimakimoto/20130812/20130812192250.png" alt="20130812192250"></a>
+<a href="http://f.hatena.ne.jp/kohkimakimoto/20130812192611"><img src="http://img.f.hatena.ne.jp/images/fotolife/k/kohkimakimoto/20130812/20130812192611.png" alt="20130812192611"></a>
 
 ## Installation
 

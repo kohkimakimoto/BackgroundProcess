@@ -44,6 +44,8 @@ $process->run();
 
 ## TODO
 
-* Developing a command line tool to check the running process.
+* Developing a api to check the running process.
+* Developing a command line utilities.
+
 
 

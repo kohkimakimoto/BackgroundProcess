@@ -2,6 +2,8 @@
 namespace Kohkimakimoto\BackgroundProcess;
 
 use Symfony\Component\Process\Process;
+use Symfony\Component\Filesystem\Filesystem;
+
 
 /**
  *
@@ -10,6 +12,10 @@ use Symfony\Component\Process\Process;
 class BackgroundProcess
 {
     protected $process;
+
+    protected $backendProcessKey;
+
+    protected $workingDirectory;
 
     /**
      * Constractor.
@@ -21,9 +27,14 @@ class BackgroundProcess
      * @param number $timeout
      * @param array $options
      */
-    public function __construct($commandline, $cwd = null, array $env = null, $stdin = null, $timeout = 60, array $options = array())
+    // public function __construct($commandline, $cwd = null, array $env = null, $stdin = null, $timeout = 60, array $options = array())
+    public function __construct($commandline)
     {
-        $this->process = new Process($commandline, $cwd, $env, $stdin, $timeout, $options);
+      $this->commandline = $commandline;
+      // $this->process = new Process($commandline, $cwd, $env, $stdin, $timeout, $options);
+
+      $this->workingDirectory = "/tmp/php/background_process";
+
     }
 
     /**
@@ -32,13 +43,67 @@ class BackgroundProcess
     public function run()
     {
       // write process table json
+      // exec('nohup ');
+    }
 
-      // execute background command.
+    public function writeCommandScript()
+    {
 
-      // execute proecss.
+      $fs = new Filesystem();
+      $path = $this->getBackgroundProcessWoringDirectory();
+      if ($fs->exists($path)) {
+        throw new Exception("$path is already exists.");
+      }
 
-      // このクラス内では直接当該コマンドを実行しない。
-      // バックグラウンドに移行するため、その前にコマンドを叩く。
+      $currentUmask = umask();
+      umask(0000);
 
+      // create directory.
+      $fs->mkdir($path, 0777);
+
+      if (!$fp = @fopen($path."/process.json", 'wb')) {
+        throw new sfCacheException(sprintf('Unable to write cache file "%s".', $tmpFile));
+      }
+
+      $key = $this->getBackgroundProcessKey();
+      $contents    = <<<EOF
+{
+  "key": "$key"
+}
+
+EOF;
+
+      @fwrite($fp, $contents);
+      @fclose($fp);
+
+      umask($currentUmask);
+
+    }
+
+    public function getBackgroundProcessWoringDirectory()
+    {
+      $dir = rtrim($this->getWorkingDirectory(), '/');
+      return $dir.'/'.$this->getBackgroundProcessKey();
+    }
+
+    /**
+     * Generate unique key for indentifing background process.
+     */
+    public function getBackgroundProcessKey()
+    {
+      if (!$this->backendProcessKey) {
+        $this->backendProcessKey = uniqid(getmypid());
+      }
+      return $this->backendProcessKey;
+    }
+
+    public function getBackgroundProcessingCommandline()
+    {
+      return sprintf('nohup %s &', $this->commandline);
+    }
+
+    public function getWorkingDirectory()
+    {
+      return $this->workingDirectory;
     }
 }

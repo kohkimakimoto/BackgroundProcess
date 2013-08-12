@@ -11,4 +11,10 @@ class BackgroundProcessTest extends \PHPUnit_Framework_TestCase
         $process->run();
     }
 
+    public function testRun2()
+    {
+      $process = new BackgroundProcess("ls -l > /tmp/test.txt");
+      $process->run();
+    }
+
 }

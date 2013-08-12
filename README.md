@@ -5,7 +5,7 @@
 
 BackgroundProcess is a PHP Library to run background processes asynchronously on your system.
 
-## Install
+## Installation
 
 
 User composer installation with below `composer.json`.

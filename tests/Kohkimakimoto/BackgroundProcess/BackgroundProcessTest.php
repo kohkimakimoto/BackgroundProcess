@@ -7,27 +7,16 @@ class BackgroundProcessTest extends \PHPUnit_Framework_TestCase
 {
     public function testRun()
     {
-        // $process = new BackgroundProcess("ls -l");
-        // $process->run();
+        $process = new BackgroundProcess("sh ".__DIR__."/BackgroundProcessTest/t1.sh");
+        $process->run();
     }
 
-    public function testGetBackgroundProcessingCommandline()
-    {
-        $process = new BackgroundProcess("ls -la");
-        $this->assertEquals("nohup ls -la &", $process->getBackgroundProcessingCommandline());
-    }
-
-    public function testWriteCommandScript()
+    /*
+    public function testwriteProcessJsonFile()
     {
       $process = new BackgroundProcess("ls -la");
-      $process->writeCommandScript();
-
+      $process->writeProcessJsonFile();
     }
-
-    public function testHetBackgroundProcessWoringDirectory()
-    {
-      $process = new BackgroundProcess("ls -la");
-      $process->getBackgroundProcessWoringDirectory();
-    }
+    */
 
 }

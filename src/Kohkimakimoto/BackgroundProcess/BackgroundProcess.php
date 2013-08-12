@@ -17,6 +17,9 @@ class BackgroundProcess
 
     protected $workingDirectory;
 
+    protected $jsonPath;
+
+
     /**
      * Constractor.
      *
@@ -30,11 +33,9 @@ class BackgroundProcess
     // public function __construct($commandline, $cwd = null, array $env = null, $stdin = null, $timeout = 60, array $options = array())
     public function __construct($commandline)
     {
-      $this->commandline = $commandline;
       // $this->process = new Process($commandline, $cwd, $env, $stdin, $timeout, $options);
-
+      $this->commandline = $commandline;
       $this->workingDirectory = "/tmp/php/background_process";
-
     }
 
     /**
@@ -42,15 +43,24 @@ class BackgroundProcess
      */
     public function run()
     {
-      // write process table json
-      // exec('nohup ');
+      $this->writeProcessJsonFile();
+      $command = $this->getBackgroundProcessingRunCommand();
+      $pid = exec($command);
+      $this->appendPidToProcessJsonFile($pid);
     }
 
-    public function writeCommandScript()
+    public function writeProcessJsonFile()
     {
-
       $fs = new Filesystem();
-      $path = $this->getBackgroundProcessWoringDirectory();
+      $dir = rtrim($this->getWorkingDirectory(), "/");
+      $key = $this->getBackgroundProcessKey();
+
+      if (!$fs->exists($dir)) {
+        // create directory.
+        $fs->mkdir($path, 0777);
+      }
+
+      $path = $dir."/process.".$key.".json";
       if ($fs->exists($path)) {
         throw new Exception("$path is already exists.");
       }
@@ -58,32 +68,23 @@ class BackgroundProcess
       $currentUmask = umask();
       umask(0000);
 
-      // create directory.
-      $fs->mkdir($path, 0777);
-
-      if (!$fp = @fopen($path."/process.json", 'wb')) {
+      if (!$fp = @fopen($path, 'wb')) {
         throw new sfCacheException(sprintf('Unable to write cache file "%s".', $tmpFile));
       }
 
-      $key = $this->getBackgroundProcessKey();
-      $contents    = <<<EOF
-{
-  "key": "$key"
-}
-
-EOF;
+      $contents =json_encode(array(
+          "key" => "$key",
+          "commandline" => $this->commandline,
+          "pid" => null,
+      ));
 
       @fwrite($fp, $contents);
       @fclose($fp);
 
       umask($currentUmask);
 
-    }
-
-    public function getBackgroundProcessWoringDirectory()
-    {
-      $dir = rtrim($this->getWorkingDirectory(), '/');
-      return $dir.'/'.$this->getBackgroundProcessKey();
+      $this->jsonPath = $path;
+      return $this->jsonPath;
     }
 
     /**
@@ -97,13 +98,33 @@ EOF;
       return $this->backendProcessKey;
     }
 
-    public function getBackgroundProcessingCommandline()
+    public function getBackgroundProcessingRunCommand()
     {
-      return sprintf('nohup %s &', $this->commandline);
+      return sprintf('nohup %s > /dev/null 2>&1 < /dev/null & echo $!', $this->commandline);
     }
 
     public function getWorkingDirectory()
     {
       return $this->workingDirectory;
     }
+
+    public function appendPidToProcessJsonFile($pid)
+    {
+      $path = $this->jsonPath;
+      if (!$fp = @fopen($path, 'wb')) {
+        throw new sfCacheException(sprintf('Unable to write cache file "%s".', $tmpFile));
+      }
+
+      $key = $this->getBackgroundProcessKey();
+
+      $contents =json_encode(array(
+          "key" => "$key",
+          "commandline" => $this->commandline,
+          "pid" => $pid,
+      ));
+
+      @fwrite($fp, $contents);
+      @fclose($fp);
+    }
+
 }

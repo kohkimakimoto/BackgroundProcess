@@ -179,5 +179,15 @@ EOF;
       $this->manager = $manager;
     }
 
+    public function getMeta()
+    {
+      return $this->meta;
+    }
+
+    public function setMeta($meta)
+    {
+      $this->meta = $meta;
+    }
+
 }
 

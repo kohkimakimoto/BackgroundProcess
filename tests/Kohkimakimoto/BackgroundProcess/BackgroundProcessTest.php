@@ -55,6 +55,10 @@ class BackgroundProcessTest extends \PHPUnit_Framework_TestCase
       $process->setManager($manager);
       $this->assertEquals($manager, $process->getManager());
 
+      $manager = new BackgroundProcessManager();
+      $process->setMeta(array('commandline' => "ls"));
+      $this->assertEquals(array('commandline' => "ls"), $process->getMeta());
+
     }
 
 

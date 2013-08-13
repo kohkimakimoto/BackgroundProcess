@@ -46,6 +46,9 @@ class BackgroundProcessManagerTest extends \PHPUnit_Framework_TestCase
       $process = $manager->LoadProcess($key);
 
       $this->assertEquals($key, $process->getKey());
+
+      $process = $manager->LoadProcess("notfoundkey");
+      $this->assertEquals(null, $process);
     }
 
     public function testAccessor()

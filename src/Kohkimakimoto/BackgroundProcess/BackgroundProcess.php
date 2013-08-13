@@ -9,12 +9,12 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class BackgroundProcess
 {
-    protected $process;
-    protected $key;
+    protected $options;
+
+    protected $keyPrefix;
     protected $workingDirectory;
-    protected $jsonPath;
-    protected $processPHPPath;
-    protected $filePrefix;
+
+    protected $key;
 
     /**
      * Constractor.
@@ -113,8 +113,7 @@ EOF;
 
       umask($currentUmask);
 
-      $this->processPHPPath = $path;
-      return $this->processPHPPath;
+      return $key;
     }
 
     public function getExecutablePHPFilePath()
@@ -202,7 +201,7 @@ EOF;
 
     public function getBackgroundProcessingRunCommand()
     {
-      return sprintf('nohup php %s > /dev/null 2>&1 < /dev/null &', $this->processPHPPath);
+      return sprintf('nohup php %s > /dev/null 2>&1 < /dev/null &', $this->getExecutablePHPFilePath());
     }
 
 }

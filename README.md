@@ -13,7 +13,7 @@ BackgroundProcess is simple. So it dosen't need any specific datastores such as 
 And dosen't use somthing like a queue and daemon process.
 
 When BackgroundProcess runs a process on the backgournd, It creates two special files.
-One of them is **Executable PHP file**. Anothe one is **Json Meta data file**.
+One of them is **Executable PHP file**. Anothe one is **Json meta data file**.
 
 **Executable PHP file** is a PHP file executed by BackgroundProcess.
 It includes the command to run specified by you.

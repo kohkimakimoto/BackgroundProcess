@@ -2,6 +2,7 @@
 namespace Kohkimakimoto\BackgroundProcess;
 
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
 
 /**
  * BackgroundProcess
@@ -33,9 +34,6 @@ class BackgroundProcessManager
       $this->keyPrefix = BackgroundProcessManager::DEFAULT_KEY_PREFIX;
     }
 
-    // Set up key
-    $this->key = $this->generateKey();
-
     // Set up workingDirectory
     if (isset($options['working_directory'])) {
       $this->workingDirectory = $options['working_directory'];
@@ -43,6 +41,51 @@ class BackgroundProcessManager
       // default value
       $this->workingDirectory = BackgroundProcessManager::DEFAULT_WORKING_DIRECTORY;
     }
+
+  }
+
+  /**
+   * list background processes.
+   */
+  public function processList()
+  {
+    $finder = new Finder();
+    $finder->files()->in(__DIR__);
+  }
+
+
+  /**
+   * Set working directory.
+   * @param unknown $workingDirectory
+   */
+  public function setWorkingDirectory($workingDirectory)
+  {
+    $this->workingDirectory = $workingDirectory;
+  }
+
+  /**
+   * Get working directory.
+   */
+  public function getWorkingDirectory()
+  {
+    return $this->workingDirectory;
+  }
+
+  /**
+   * Set key prefix
+   * @param unknown $filePrefix
+   */
+  public function setKeyPrefix($keyPrefix)
+  {
+    $this->keyPrefix = $keyPrefix;
+  }
+
+  /**
+   * Get key prefix
+   */
+  public function getKeyPrefix()
+  {
+    return $this->keyPrefix;
   }
 }
 

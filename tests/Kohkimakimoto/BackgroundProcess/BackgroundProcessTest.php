@@ -2,6 +2,7 @@
 namespace Test\Kohkimakimoto\BackgroundProcess;
 
 use Kohkimakimoto\BackgroundProcess\BackgroundProcess;
+use Kohkimakimoto\BackgroundProcess\BackgroundProcessManager;
 
 class BackgroundProcessTest extends \PHPUnit_Framework_TestCase
 {
@@ -25,8 +26,6 @@ class BackgroundProcessTest extends \PHPUnit_Framework_TestCase
 
         $retVal = file_get_contents("/tmp/BackgroundProcess_t1.sh.output");
         $this->assertEquals("aaaa\naaaa\naaaa\n", $retVal);
-
-
     }
 
     public function testRun2()
@@ -49,14 +48,12 @@ class BackgroundProcessTest extends \PHPUnit_Framework_TestCase
       $process->setKey("aaaaaa");
       $this->assertEquals("aaaaaa", $process->getKey());
 
-      $process->setWorkingDirectory("/var/tmp");
-      $this->assertEquals("/var/tmp", $process->getWorkingDirectory());
-
-      $process->setKeyPrefix("prefix111");
-      $this->assertEquals("prefix111", $process->getKeyPrefix());
-
       $process->setCommandline("ls -ltr");
       $this->assertEquals("ls -ltr", $process->getCommandline());
+
+      $manager = new BackgroundProcessManager();
+      $process->setManager($manager);
+      $this->assertEquals($manager, $process->getManager());
 
     }
 

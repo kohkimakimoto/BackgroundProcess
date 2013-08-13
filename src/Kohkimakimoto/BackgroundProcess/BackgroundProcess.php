@@ -10,7 +10,7 @@ use Kohkimakimoto\BackgroundProcess\BackgroundProcessManager;
  */
 class BackgroundProcess
 {
-    protected $options;
+    protected $manger;
 
     protected $keyPrefix;
     protected $workingDirectory;
@@ -26,26 +26,10 @@ class BackgroundProcess
     public function __construct($commandline, $options = array())
     {
       $this->commandline = $commandline;
-      $this->options = $options;
-
-      // Set up key prefix
-      if (isset($options['key_prefix'])) {
-        $this->keyPrefix = $options['key_prefix'];
-      } else {
-        // default value
-        $this->keyPrefix = BackgroundProcessManager::DEFAULT_KEY_PREFIX;
-      }
+      $this->manager = new BackgroundProcessManager($options);
 
       // Set up key
       $this->key = $this->generateKey();
-
-      // Set up workingDirectory
-      if (isset($options['working_directory'])) {
-        $this->workingDirectory = $options['working_directory'];
-      } else {
-        // default value
-        $this->workingDirectory = BackgroundProcessManager::DEFAULT_WORKING_DIRECTORY;
-      }
     }
 
     /**
@@ -92,9 +76,11 @@ class BackgroundProcess
 //
 \$key = "$key";
 \$pid = posix_getpid();
+\$createdAt = new \DateTime();
 \$meta = json_encode(array(
     "key" => \$key,
-    "pid" => \$pid
+    "pid" => \$pid,
+    "created_at" => \$createdAt->format('Y-m-d H:i:s'),
 ));
 \$metaPath = __DIR__."/${key}.json";
 
@@ -119,7 +105,7 @@ EOF;
 
     public function getExecutablePHPFilePath()
     {
-      $dir = rtrim($this->getWorkingDirectory(), "/");
+      $dir = rtrim($this->getManager()->getWorkingDirectory(), "/");
       $key = $this->getKey();
 
       return $dir."/".$key.".php";
@@ -130,7 +116,7 @@ EOF;
      */
     public function generateKey()
     {
-      return $this->getKeyPrefix().uniqid(getmypid());
+      return $this->getManager()->getKeyPrefix().uniqid(getmypid());
     }
 
     /**
@@ -143,45 +129,10 @@ EOF;
 
     /**
      * Set key
-     * @param unknown $key
      */
     public function setKey($key)
     {
       $this->key = $key;
-    }
-
-    /**
-     * Set working directory.
-     * @param unknown $workingDirectory
-     */
-    public function setWorkingDirectory($workingDirectory)
-    {
-      $this->workingDirectory = $workingDirectory;
-    }
-
-    /**
-     * Get working directory.
-     */
-    public function getWorkingDirectory()
-    {
-      return $this->workingDirectory;
-    }
-
-    /**
-     * Set file prefix
-     * @param unknown $filePrefix
-     */
-    public function setKeyPrefix($keyPrefix)
-    {
-      $this->keyPrefix = $keyPrefix;
-    }
-
-    /**
-     * Get working directory.
-     */
-    public function getKeyPrefix()
-    {
-      return $this->keyPrefix;
     }
 
     /**
@@ -203,6 +154,16 @@ EOF;
     public function getBackgroundProcessingRunCommand()
     {
       return sprintf('nohup php %s > /dev/null 2>&1 < /dev/null &', $this->getExecutablePHPFilePath());
+    }
+
+    public function getManager()
+    {
+      return $this->manager;
+    }
+
+    public function setManager($manager)
+    {
+      $this->manager = $manager;
     }
 
 }

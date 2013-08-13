@@ -50,9 +50,28 @@ class BackgroundProcessManager
   public function processList()
   {
     $finder = new Finder();
-    $finder->files()->in(__DIR__);
+    $finder->files()->in($this->getWorkingDirectory())->name($this->getKeyPrefix()."*.json");
+
+    $arr = array();
+    foreach ($finder as $file) {
+      $arr[] = $this->createBackgroundProcessFromJson($file->getContents());
+    }
+
+    return $arr;
   }
 
+  /**
+   * Create new BackgroundProcess from Json string.
+   * @param unknown $meta
+   * @return \Kohkimakimoto\BackgroundProcess\BackgroundProcess
+   */
+  protected function createBackgroundProcessFromJson($json)
+  {
+    $meta = json_decode($json, true);
+
+    $backgroudProcess = new BackgroundProcess($meta['commandline'], $this, $meta);
+    return $backgroudProcess;
+  }
 
   /**
    * Set working directory.
@@ -87,5 +106,6 @@ class BackgroundProcessManager
   {
     return $this->keyPrefix;
   }
+
 }
 

@@ -10,26 +10,37 @@ use Kohkimakimoto\BackgroundProcess\BackgroundProcessManager;
  */
 class BackgroundProcess
 {
-    protected $manger;
-
-    protected $keyPrefix;
-    protected $workingDirectory;
+    protected $manager;
 
     protected $key;
+
+    protected $meta;
 
     /**
      * Constractor.
      *
      * @param string $commandline Commandline to run
-     * @param array $options Options to set environment.
+     * @param array  $options Options to set environment.
+     * @param string $key unique key of the process.
      */
-    public function __construct($commandline, $options = array())
+    public function __construct($commandline, $options = array(), $meta = array())
     {
       $this->commandline = $commandline;
-      $this->manager = new BackgroundProcessManager($options);
 
-      // Set up key
-      $this->key = $this->generateKey();
+      if ($options instanceof BackgroundProcessManager) {
+        $this->manager = $options;
+      } else {
+        $this->manager = new BackgroundProcessManager($options);
+      }
+
+      // Set up meta and key
+      if ($meta) {
+        $this->key =  $meta['key'];
+        $this->meta = $meta;
+      } else {
+        $this->key = $this->generateKey();
+        $this->meta = array('key' => $this->key, 'commandline' => $this->commandline);
+      }
     }
 
     /**
@@ -77,9 +88,11 @@ class BackgroundProcess
 \$key = "$key";
 \$pid = posix_getpid();
 \$createdAt = new \DateTime();
+\$commandline = "$commandline";
 \$meta = json_encode(array(
     "key" => \$key,
     "pid" => \$pid,
+    "commandline" => \$commandline,
     "created_at" => \$createdAt->format('Y-m-d H:i:s'),
 ));
 \$metaPath = __DIR__."/${key}.json";
@@ -87,7 +100,7 @@ class BackgroundProcess
 // Put meta file to save pid.
 file_put_contents(\$metaPath, \$meta);
 
-exec("$commandline");
+exec(\$commandline);
 
 // Delete meta file and self;
 unlink(\$metaPath);

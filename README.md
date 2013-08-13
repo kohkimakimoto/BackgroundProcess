@@ -41,11 +41,3 @@ $process = new BackgroundProcess("ls -l > /tmp/test.txt");
 $process->run();
 
 ```
-
-## TODO
-
-* Developing a api to check the running process.
-* Developing a command line utilities.
-
-
-

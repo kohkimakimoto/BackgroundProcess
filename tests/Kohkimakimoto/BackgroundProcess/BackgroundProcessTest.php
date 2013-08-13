@@ -38,18 +38,6 @@ class BackgroundProcessTest extends \PHPUnit_Framework_TestCase
         'key_prefix'        => 'abc.',
       ));
       $process->run();
-
-      sleep(4);
-
-      if (!file_exists($process->getExecutablePHPFilePath())) {
-        // File has not deleted. It's fail.
-        $this->assertEquals(true, true);
-      } else {
-        $this->assertEquals(true, false);
-      }
-
-      $retVal = file_get_contents("/tmp/BackgroundProcess_t1.sh.output");
-      $this->assertEquals("aaaa\naaaa\naaaa\n", $retVal);
     }
 
     public function testAccessor()

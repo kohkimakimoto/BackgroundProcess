@@ -57,4 +57,5 @@ $manager = new BackgroundProcessManager();
 $process = $manager->loadProcess($key);
 $meta = $process->getMeta();
 echo $meta['created_at'];   // (ex 2013-01-01 10:00:20
+echo $meta['pid'];          // (ex 1234
 ```

@@ -48,6 +48,7 @@ class BackgroundProcessManagerTest extends \PHPUnit_Framework_TestCase
       $this->assertEquals($key, $process->getKey());
       $meta = $process->getMeta('created_at');
       $this->assertRegExp("/\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d/", $meta['created_at']);
+      $this->assertRegExp("/\d*/", (string)$meta['pid']);
 
       $process = $manager->LoadProcess("notfoundkey");
       $this->assertEquals(null, $process);

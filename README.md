@@ -34,7 +34,6 @@ $ php composer.phar install
 Run a command on the background.
 
 ```php
-
 use Kohkimakimoto\BackgroundProcess\BackgroundProcess;
 
 // Creates instance and set command string to run at the background.
@@ -42,20 +41,25 @@ $process = new BackgroundProcess("ls -l > /tmp/test.txt");
 // Runs command, and it returns immediately.
 $process->run();
 
-// Get key that identified the process at a unique.
+// Get key that identified the process.
 $key = $process->key();
-
 ```
 
 Check the process.
 
 ```php
-
 use Kohkimakimoto\BackgroundProcess\BackgroundProcess;
 
 $manager = new BackgroundProcessManager();
 $process = $manager->loadProcess($key);
-$meta = $process->getMeta();
-echo $meta['created_at'];   // (ex 2013-01-01 10:00:20
-echo $meta['pid'];          // (ex 1234
+
+// If a process specified by the key dosen't exist, loadProcess returns null.
+if (!$process) {
+  echo "Not working process $key";
+} else {
+  $meta = $process->getMeta();
+  echo $meta['created_at'];   // (ex 2013-01-01 10:00:20
+  echo $meta['pid'];          // (ex 1234
+}
+
 ```

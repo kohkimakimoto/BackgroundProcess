@@ -28,4 +28,24 @@ class BackgroundProcessTest extends \PHPUnit_Framework_TestCase
     }
 
 
+    public function testAccessor()
+    {
+      $process = new BackgroundProcess("sh ".__DIR__."/BackgroundProcessTest/t1.sh");
+
+      $process->setKey("aaaaaa");
+      $this->assertEquals("aaaaaa", $process->getKey());
+
+      $process->setWorkingDirectory("/var/tmp");
+      $this->assertEquals("/var/tmp", $process->getWorkingDirectory());
+
+      $process->setKeyPrefix("prefix111");
+      $this->assertEquals("prefix111", $process->getKeyPrefix());
+
+      $process->setCommandline("ls -ltr");
+      $this->assertEquals("ls -ltr", $process->getCommandline());
+
+    }
+
+
+
 }

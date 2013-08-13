@@ -177,7 +177,7 @@ EOF;
      */
     public function setKeyPrefix($keyPrefix)
     {
-      return $this->keyPrefix;
+      $this->keyPrefix = $keyPrefix;
     }
 
     /**
@@ -194,6 +194,14 @@ EOF;
     public function getCommandline()
     {
       return $this->commandline;
+    }
+
+    /**
+     * set commandline.
+     */
+    public function setCommandline($commandline)
+    {
+      $this->commandline = $commandline;
     }
 
     public function getBackgroundProcessingRunCommand()

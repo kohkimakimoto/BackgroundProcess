@@ -18,7 +18,7 @@ One of them is **Executable PHP file**. Anothe one is **Json meta data file**.
 **Executable PHP file** is a PHP file executed by BackgroundProcess.
 It includes the command to run specified by you.
 It also has some initialization and finalization code.
-At default, this file is like the following.
+At default, this file name is like the following.
 ```
 /tmp/php/background_process/process.2494951fd9d147bc3e.php
 ```
@@ -26,7 +26,7 @@ At default, this file is like the following.
 **Json meta data file** is a json formmated file. it's created at the preprocess in the **Executable PHP file**.
 It includes process id and created timestamp.
 It is used to inspect background process statuses through BackgroundProcessManager Class API.
-At default, this file is like the following
+At default, this file name is like the following
 ```
 /tmp/php/background_process/process.2494951fd9d147bc3e.json
 ```

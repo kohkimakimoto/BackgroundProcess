@@ -47,17 +47,34 @@ class BackgroundProcessManager
   /**
    * list background processes.
    */
-  public function processList()
+  public function listProcesses()
   {
     $finder = new Finder();
     $finder->files()->in($this->getWorkingDirectory())->name($this->getKeyPrefix()."*.json");
 
-    $arr = array();
+    $processes = array();
     foreach ($finder as $file) {
-      $arr[] = $this->createBackgroundProcessFromJson($file->getContents());
+      $processes[] = $this->createBackgroundProcessFromJson($file->getContents());
     }
 
-    return $arr;
+    return $processes;
+  }
+
+  /**
+   * Load background process.
+   * @param string $key
+   * @return multitype:NULL
+   */
+  public function loadProcess($key)
+  {
+    $finder = new Finder();
+    $finder->files()->in($this->getWorkingDirectory())->name($key.".json");
+
+    foreach ($finder as $file) {
+      return $this->createBackgroundProcessFromJson($file->getContents());
+    }
+
+    return null;
   }
 
   /**

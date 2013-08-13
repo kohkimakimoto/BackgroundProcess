@@ -6,7 +6,7 @@ use Kohkimakimoto\BackgroundProcess\BackgroundProcessManager;
 
 class BackgroundProcessManagerTest extends \PHPUnit_Framework_TestCase
 {
-    public function testDefault()
+    public function testListProcesses()
     {
       if (file_exists("/tmp/BackgroundProcessManager_t1.sh.output")) {
         unlink("/tmp/BackgroundProcessManager_t1.sh.output");
@@ -22,9 +22,30 @@ class BackgroundProcessManagerTest extends \PHPUnit_Framework_TestCase
       while (!file_exists($dir."/".$key.".json")) { }
 
       $manager = new BackgroundProcessManager();
-      $processList = $manager->processList();
+      $processes = $manager->listProcesses();
 
-      $this->assertEquals($key, $processList[0]->getKey());
+      $this->assertEquals($key, $processes[0]->getKey());
+    }
+
+    public function testLoadProcess()
+    {
+      if (file_exists("/tmp/BackgroundProcessManager_t1.sh.output")) {
+        unlink("/tmp/BackgroundProcessManager_t1.sh.output");
+      }
+
+      $process = new BackgroundProcess("sh ".__DIR__."/BackgroundProcessManagerTest/t1.sh");
+      $process->run();
+
+      $key = $process->getKey();
+      $dir = $process->getManager()->getWorkingDirectory();
+
+      // wait for creating json file.
+      while (!file_exists($dir."/".$key.".json")) { }
+
+      $manager = new BackgroundProcessManager();
+      $process = $manager->LoadProcess($key);
+
+      $this->assertEquals($key, $process->getKey());
     }
 
     public function testAccessor()

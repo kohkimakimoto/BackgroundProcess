@@ -5,19 +5,15 @@ use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * BackgroundProcess
- * @author Kohki Makimoto
+ * @author Kohki Makimoto <kohki.makimoto@gmail.com>
  */
 class BackgroundProcess
 {
     protected $process;
     protected $key;
-
     protected $workingDirectory;
-
     protected $jsonPath;
-
     protected $processPHPPath;
-
     protected $filePrefix;
 
     /**

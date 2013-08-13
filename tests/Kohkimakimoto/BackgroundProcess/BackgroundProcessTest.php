@@ -25,6 +25,8 @@ class BackgroundProcessTest extends \PHPUnit_Framework_TestCase
 
         $retVal = file_get_contents("/tmp/BackgroundProcess_t1.sh.output");
         $this->assertEquals("aaaa\naaaa\naaaa\n", $retVal);
+
+
     }
 
     public function testRun2()

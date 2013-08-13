@@ -30,7 +30,7 @@ At default, this file name is like the following
 ```
 /tmp/php/background_process/process.2494951fd9d147bc3e.json
 ```
-Executable PHP file and Json meta data file are same name without extentions.
+Executable PHP file and Json meta data file have same name without extentions.
 
 These two files are automatically deleted at the end of the processing.
 Therefore, you generally don't need to manipulate them.

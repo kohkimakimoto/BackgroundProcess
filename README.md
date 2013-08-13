@@ -31,7 +31,7 @@ $ php composer.phar install
 
 ## Usage
 
-Run command on background.
+Run a command on the background.
 
 ```php
 
@@ -47,7 +47,7 @@ $key = $process->key();
 
 ```
 
-Check a process.
+Check the process.
 
 ```php
 

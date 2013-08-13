@@ -70,6 +70,9 @@ class BackgroundProcess
       $fs = new Filesystem();
       $path = $this->getExecutablePHPFilePath();
 
+      $currentUmask = umask();
+      umask(0000);
+
       if (!$fs->exists(dirname($path))) {
         $fs->mkdir(dirname($path), 0777);
       }
@@ -77,9 +80,6 @@ class BackgroundProcess
       if ($fs->exists($path)) {
         throw new Exception("Executable PHP file $path is already exists.");
       }
-
-      $currentUmask = umask();
-      umask(0000);
 
       if (!$fp = @fopen($path, 'wb')) {
         throw new Exception("Unable to write to $path.");

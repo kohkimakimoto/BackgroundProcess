@@ -53,7 +53,7 @@ use Kohkimakimoto\BackgroundProcess\BackgroundProcess;
 $manager = new BackgroundProcessManager();
 $process = $manager->loadProcess($key);
 
-// If a process specified by the key dosen't exist, loadProcess returns null.
+// If a process specified by the key dosen't exist, loadProcess method returns null.
 if (!$process) {
   echo "Not working process $key";
 } else {

@@ -23,15 +23,17 @@ At default, this file is like the following.
 /tmp/php/background_process/process.2494951fd9d147bc3e.php
 ```
 
-**Json meta data file** is a json fommated file. it's created at the preprocess in the **Executable PHP file**.
-It includes process id and timestamp created files.
+**Json meta data file** is a json formmated file. it's created at the preprocess in the **Executable PHP file**.
+It includes process id and created timestamp.
 It is used to inspect background process statuses through BackgroundProcessManager Class API.
 At default, this file is like the following
 ```
 /tmp/php/background_process/process.2494951fd9d147bc3e.json
 ```
+Executable PHP file and Json meta data file are same name without extentions.
 
 These two files are automatically deleted at the end of the processing.
+Therefore, you generally don't need to manipulate them.
 
 ## Installation
 

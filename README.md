@@ -57,7 +57,7 @@ $ php composer.phar install
 
 ## Usage
 
-Run a command on the background.
+The following code is to run a command on the background.
 
 ```php
 use Kohkimakimoto\BackgroundProcess\BackgroundProcess;
@@ -71,7 +71,7 @@ $process->run();
 $key = $process->key();
 ```
 
-Check the process.
+The following code is to inspect the background process.
 
 ```php
 use Kohkimakimoto\BackgroundProcess\BackgroundProcess;

@@ -2,6 +2,7 @@
 namespace Kohkimakimoto\BackgroundProcess;
 
 use Symfony\Component\Filesystem\Filesystem;
+use Kohkimakimoto\BackgroundProcess\BackgroundProcessManager;
 
 /**
  * BackgroundProcess
@@ -32,7 +33,7 @@ class BackgroundProcess
         $this->keyPrefix = $options['key_prefix'];
       } else {
         // default value
-        $this->keyPrefix = "process.";
+        $this->keyPrefix = BackgroundProcessManager::DEFAULT_KEY_PREFIX;
       }
 
       // Set up key
@@ -43,7 +44,7 @@ class BackgroundProcess
         $this->workingDirectory = $options['working_directory'];
       } else {
         // default value
-        $this->workingDirectory = "/tmp/php/background_process";
+        $this->workingDirectory = BackgroundProcessManager::DEFAULT_WORKING_DIRECTORY;
       }
     }
 

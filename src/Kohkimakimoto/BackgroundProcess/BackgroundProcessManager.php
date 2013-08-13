@@ -9,6 +9,13 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class BackgroundProcessManager
 {
+  protected $options;
+  protected $keyPrefix;
+  protected $workingDirectory;
+
+  const DEFAULT_KEY_PREFIX        = 'process.';
+  const DEFAULT_WORKING_DIRECTORY = '/tmp/php/background_process';
+
   /**
    * Constractor.
    *
@@ -23,7 +30,7 @@ class BackgroundProcessManager
       $this->keyPrefix = $options['key_prefix'];
     } else {
       // default value
-      $this->keyPrefix = "process.";
+      $this->keyPrefix = BackgroundProcessManager::DEFAULT_KEY_PREFIX;
     }
 
     // Set up key
@@ -34,7 +41,7 @@ class BackgroundProcessManager
       $this->workingDirectory = $options['working_directory'];
     } else {
       // default value
-      $this->workingDirectory = "/tmp/php/background_process";
+      $this->workingDirectory = BackgroundProcessManager::DEFAULT_WORKING_DIRECTORY;
     }
   }
 }

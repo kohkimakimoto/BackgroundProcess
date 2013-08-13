@@ -9,6 +9,9 @@ BackgroundProcess is a PHP Library to run background processes asynchronously on
 
 <a href="http://f.hatena.ne.jp/kohkimakimoto/20130812192611"><img src="http://img.f.hatena.ne.jp/images/fotolife/k/kohkimakimoto/20130812/20130812192611.png" alt="20130812192611"></a>
 
+BackgroundProcess is simple. So it dosen't need any specific datastores such as RDBMS.
+And dosen't use somthing like a queue and daemon process.
+
 When BackgroundProcess runs a process on the backgournd, It creates two special files.
 One of them is **Executable PHP file**. Anothe one is **Json Meta data file**.
 
@@ -20,7 +23,7 @@ At default, this file is like the following.
 /tmp/php/background_process/process.2494951fd9d147bc3e.php
 ```
 
-**Json Meta data file** is a json fommated file. it's created at the preprocess in the **Executable PHP file**.
+**Json meta data file** is a json fommated file. it's created at the preprocess in the **Executable PHP file**.
 It includes process id and timestamp created files.
 It is used to inspect background process statuses through BackgroundProcessManager Class API.
 At default, this file is like the following

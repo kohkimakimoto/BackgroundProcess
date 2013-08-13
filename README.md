@@ -31,6 +31,8 @@ $ php composer.phar install
 
 ## Usage
 
+Run command on background.
+
 ```php
 
 use Kohkimakimoto\BackgroundProcess\BackgroundProcess;
@@ -40,4 +42,19 @@ $process = new BackgroundProcess("ls -l > /tmp/test.txt");
 // Runs command, and it returns immediately.
 $process->run();
 
+// Get key that identified the process at a unique.
+$key = $process->key();
+
+```
+
+Check a process.
+
+```php
+
+use Kohkimakimoto\BackgroundProcess\BackgroundProcess;
+
+$manager = new BackgroundProcessManager();
+$process = $manager->loadProcess($key);
+$meta = $process->getMeta();
+echo $meta['created_at'];   // (ex 2013-01-01 10:00:20
 ```

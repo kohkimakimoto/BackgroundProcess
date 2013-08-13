@@ -1,4 +1,7 @@
 #!/usr/bin/env php
 <?php
 require_once __DIR__.'/../src/Kohkimakimoto/BackgroundProcess/Cli.php';
+$cli = new \Kohkimakimoto\BackgroundProcess\Cli();
+$cli->execute();
+
 

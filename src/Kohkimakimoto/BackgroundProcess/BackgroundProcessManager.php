@@ -13,9 +13,13 @@ class BackgroundProcessManager
   protected $options;
   protected $keyPrefix;
   protected $workingDirectory;
+  protected $errorLog;
 
   const DEFAULT_KEY_PREFIX        = 'process.';
+
   const DEFAULT_WORKING_DIRECTORY = '/tmp/php/background_process';
+
+  const DEFAULT_ERROR_LOG = 'err.log';
 
   /**
    * Constractor.
@@ -42,6 +46,17 @@ class BackgroundProcessManager
       $this->workingDirectory = BackgroundProcessManager::DEFAULT_WORKING_DIRECTORY;
     }
 
+    // Set up error log
+    if (isset($options['error_log'])) {
+      $this->errorLog = $options['error_log'];
+    } else {
+      // default value
+      $this->errorLog = BackgroundProcessManager::DEFAULT_ERROR_LOG;
+    }
+
+    if (strpos($this->errorLog, '/') !== 0) {
+      $this->errorLog = $this->workingDirectory.'/'.$this->errorLog;
+    }
   }
 
   /**
@@ -124,5 +139,12 @@ class BackgroundProcessManager
     return $this->keyPrefix;
   }
 
+  /**
+   * Get error log
+   */
+  public function getErrorLog()
+  {
+    return $this->errorLog;
+  }
 }
 

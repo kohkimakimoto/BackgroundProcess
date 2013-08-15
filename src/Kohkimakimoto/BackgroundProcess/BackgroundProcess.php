@@ -79,6 +79,7 @@ class BackgroundProcess
 
       $commandline = $this->getCommandline();
       $key = $this->getKey();
+      $errorLog = $this->getManager()->getErrorLog();
 
       $contents =<<<EOF
 <?php
@@ -87,8 +88,9 @@ class BackgroundProcess
 //
 \$key = "$key";
 \$pid = posix_getpid();
-\$createdAt = new \DateTime();
+\$createdAt = new DateTime();
 \$commandline = "$commandline";
+\$errorLog = "$errorLog";
 \$meta = json_encode(array(
     "key" => \$key,
     "pid" => \$pid,
@@ -100,7 +102,28 @@ class BackgroundProcess
 // Put meta file to save pid.
 file_put_contents(\$metaPath, \$meta);
 
-exec(\$commandline);
+// Set up proc_open.
+\$descriptorspec = array(
+  2 => array("pipe","w"),
+);
+
+\$retVal = null;
+\$stderr = null;
+
+// Run command.
+\$process =proc_open(\$commandline, \$descriptorspec, \$pipes);
+// stderr
+while (!feof(\$pipes[2])) {
+  \$stderr .= fread(\$pipes[2], 8192);
+}
+
+\$retVal = proc_close(\$process);
+if (\$retVal !== 0) {
+  // Handling errors.
+  \$now = new \DateTime();
+  \$message = \$now->format('Y-m-d H:i:s')."\\t\${key}\\t\${stderr}";
+  file_put_contents(\$errorLog, \$message, FILE_APPEND);
+}
 
 // Delete meta file and self;
 unlink(\$metaPath);

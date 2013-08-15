@@ -28,6 +28,9 @@ class BackgroundProcessTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("aaaa\naaaa\naaaa\n", $retVal);
     }
 
+    /**
+     * Test of BackgroundProcess Option configurations.
+     */
     public function testRun2()
     {
       if (file_exists("/tmp/BackgroundProcess_t1.sh.output")) {
@@ -37,8 +40,33 @@ class BackgroundProcessTest extends \PHPUnit_Framework_TestCase
       $process = new BackgroundProcess("sh ".__DIR__."/BackgroundProcessTest/t1.sh", array(
         'working_directory' => '/var/tmp/php/background_process',
         'key_prefix'        => 'abc.',
+        'error_log'         => 'error_foo.log',
       ));
       $process->run();
+    }
+
+    /**
+     * Test of command raise error.
+     */
+    public function testRun3()
+    {
+      if (file_exists("/tmp/php/background_process/err.log")) {
+        unlink("/tmp/php/background_process/err.log");
+      }
+
+      $process = new BackgroundProcess("sh ".__DIR__."/BackgroundProcessTest/t2.sh");
+      $process->run();
+
+      sleep(1);
+
+      if (file_exists("/tmp/php/background_process/err.log")) {
+        // File has not deleted. It's fail.
+        $this->assertEquals(true, true);
+      } else {
+        $this->assertEquals(true, false);
+      }
+
+
     }
 
     public function testAccessor()

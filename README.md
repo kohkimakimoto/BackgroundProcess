@@ -43,7 +43,7 @@ User composer installation with below `composer.json`.
 ``` json
 {
   "require": {
-    "kohkimakimoto/background-process": "1.0.*"
+    "kohkimakimoto/background-process": "1.1.*"
   }
 }
 ```

@@ -89,3 +89,29 @@ if (!$process) {
 }
 
 ```
+
+If your command raises error, BackgroundProcess writes logs to error log file.
+```
+/tmp/php/background_process/err.log
+```
+
+## Configuration Opstions
+
+You can use configuration options to change behavior of BackgroundProcess.
+
+```php
+use Kohkimakimoto\BackgroundProcess\BackgroundProcess;
+
+// Creates instance and set command string to run at the background.
+$process = new BackgroundProcess("ls -l > /tmp/test.txt", array(
+  'working_directory' => '/path/to/background_process_directroy',
+  'key_prefix'        => 'prefix_of_key.',
+  'error_log'         => 'your_error.log',
+));
+```
+
+
+
+
+
+

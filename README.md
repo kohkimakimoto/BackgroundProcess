@@ -48,7 +48,7 @@ User composer installation with below `composer.json`.
 }
 ```
 
-And run Composer install command.
+And runs Composer install command.
 
 ```
 $ curl -s http://getcomposer.org/installer | php
@@ -57,7 +57,7 @@ $ php composer.phar install
 
 ## Usage
 
-The following code is to run a command on the background.
+The following code runs a command on the background.
 
 ```php
 use Kohkimakimoto\BackgroundProcess\BackgroundProcess;
@@ -67,11 +67,11 @@ $process = new BackgroundProcess("ls -l > /tmp/test.txt");
 // Runs command, and it returns immediately.
 $process->run();
 
-// Get key that identified the process.
+// Get key identified the process.
 $key = $process->key();
 ```
 
-The following code is to inspect the background process.
+The following code inspects the background process.
 
 ```php
 use Kohkimakimoto\BackgroundProcess\BackgroundProcess;
@@ -95,7 +95,7 @@ If your command raises error, BackgroundProcess writes logs to error log file.
 /tmp/php/background_process/err.log
 ```
 
-## Configuration Opstions
+## Configuration Options
 
 You can use configuration options to change behavior of BackgroundProcess.
 

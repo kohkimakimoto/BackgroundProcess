@@ -110,6 +110,10 @@ $process = new BackgroundProcess("ls -l > /tmp/test.txt", array(
 ));
 ```
 
+## License
+
+Apache License 2.0
+
 
 
 

@@ -9,7 +9,7 @@ BackgroundProcess is a PHP Library to run background processes asynchronously on
 
 <a href="http://f.hatena.ne.jp/kohkimakimoto/20130812192611"><img src="http://img.f.hatena.ne.jp/images/fotolife/k/kohkimakimoto/20130812/20130812192611.png" alt="20130812192611"></a>
 
-BackgroundProcess is simple. So it dosen't need any specific datastores such as RDBMS.
+BackgroundProcess is simple. So it doesn't need any specific datastores such as RDBMS.
 And dosen't use somthing like a queue and daemon process.
 
 When BackgroundProcess runs a process on the backgournd, It creates two special files.

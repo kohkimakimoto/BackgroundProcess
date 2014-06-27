@@ -68,13 +68,13 @@ $process = new BackgroundProcess("ls -l > /tmp/test.txt");
 $process->run();
 
 // Get key identified the process.
-$key = $process->key();
+$key = $process->getKey();
 ```
 
 The following code inspects the background process.
 
 ```php
-use Kohkimakimoto\BackgroundProcess\BackgroundProcess;
+use Kohkimakimoto\BackgroundProcess\BackgroundProcessManager;
 
 $manager = new BackgroundProcessManager();
 $process = $manager->loadProcess($key);

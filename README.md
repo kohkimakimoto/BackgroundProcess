@@ -74,7 +74,7 @@ $key = $process->key();
 The following code inspects the background process.
 
 ```php
-use Kohkimakimoto\BackgroundProcess\BackgroundProcess;
+use Kohkimakimoto\BackgroundProcess\BackgroundProcessManager;
 
 $manager = new BackgroundProcessManager();
 $process = $manager->loadProcess($key);

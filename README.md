@@ -13,7 +13,7 @@ BackgroundProcess is simple. So it doesn't need any specific datastores such as 
 And dosen't use somthing like a queue and daemon process.
 
 When BackgroundProcess runs a process on the background, It creates two special files.
-One of them is **Executable PHP file**. Anothe one is **Json meta data file**.
+One of them is an **Executable PHP file**. Another one is a **JSON meta data file**.
 
 **Executable PHP file** is a PHP file executed by BackgroundProcess.
 It includes the command to run specified by you.
@@ -23,14 +23,14 @@ At default, this file name is like the following.
 /tmp/php/background_process/process.2494951fd9d147bc3e.php
 ```
 
-**Json meta data file** is a json formmated file. it's created at the preprocess in the **Executable PHP file**.
+**JSON meta data file** is a json formmated file. it's created at the preprocess in the **Executable PHP file**.
 It includes process id and created timestamp.
 It is used to inspect background process statuses through BackgroundProcessManager Class API.
 At default, this file name is like the following
 ```
 /tmp/php/background_process/process.2494951fd9d147bc3e.json
 ```
-Executable PHP file and Json meta data file have same name without extentions.
+The executable PHP file and JSON meta data file have same name without extentions.
 
 These two files are automatically deleted at the end of the processing.
 Therefore, you generally don't need to manipulate them.
